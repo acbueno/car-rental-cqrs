@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.acbueno.cqrs.car.query.service.CarQueryService;
 import br.com.acbueno.cqrs.dto.CarResponseDTO;
+import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/api/queries/cars")
@@ -32,4 +33,9 @@ public class CarQueryController {
     return ResponseEntity.ok(carQueryService.listCarAvailable());
   }
 
+  @GetMapping("/{type}")
+  public ResponseEntity<List<CarResponseDTO>> getAllCarsAvailbleByType(
+      @PathParam("type") String type) {
+    return ResponseEntity.ok(carQueryService.getCarByType(type));
+  }
 }

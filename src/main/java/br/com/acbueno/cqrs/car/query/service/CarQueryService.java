@@ -1,5 +1,6 @@
 package br.com.acbueno.cqrs.car.query.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
@@ -43,6 +44,17 @@ public class CarQueryService {
         .stream()
         .map(car -> modelMapper.map(car, CarResponseDTO.class))
         .collect(Collectors.toList());
+  }
+  
+  public List<CarResponseDTO> getCarByType(String type) {
+    List<CarResponseDTO> listCarType = new ArrayList<>();
+    carRepository.findAll().forEach(car -> {
+      if(car.getType().name().equals(type.toUpperCase())) {
+        listCarType.add(modelMapper.map(car, CarResponseDTO.class));
+      }
+    });
+    
+    return listCarType;
   }
 
 }
